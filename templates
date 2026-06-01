@@ -1,9 +1,18 @@
-<header style="display: flex; justify-content: center; align-items: center; padding: 20px; border-bottom: 1px solid #333; margin-bottom: 30px;">
-    <div style="text-align: center;">
-        <div style="width: 50px; height: 50px; background: #fff; border-radius: 50%; margin: 0 auto;"></div> <nav style="margin-top: 15px;">
-            <a href="#" style="color: #fff; text-decoration: none; margin: 0 15px;">Inicio</a>
-            <a href="#" style="color: #fff; text-decoration: none; margin: 0 15px;">Catálogo</a>
-            <a href="#" style="color: #fff; text-decoration: none; margin: 0 15px;">Contacto</a>
-        </nav>
-    </div>
-</header>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestCodex — Sandbox</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #09090b;
+            --surface: #111113;
+            --surface-2: #18181b;
+            --surface-3: #1e1e22;
+            --border: rgba(255,
