@@ -15,4 +15,651 @@
             --surface: #111113;
             --surface-2: #18181b;
             --surface-3: #1e1e22;
-            --border: rgba(255,
+            --border: rgba(255,255,255,0.06);
+            --border-accent: rgba(255,255,255,0.12);
+            --text: #f4f4f5;
+            --text-muted: #71717a;
+            --text-dim: #3f3f46;
+            --accent: #a3e635;
+            --accent-dim: rgba(163, 230, 53, 0.12);
+            --accent-glow: rgba(163, 230, 53, 0.06);
+            --error: #f87171;
+            --error-dim: rgba(248, 113, 113, 0.1);
+            --mono: 'JetBrains Mono', monospace;
+            --display: 'Syne', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr;
+            gap: 0;
+        }
+
+        /* ─── Top bar ─── */
+        .topbar {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            height: 56px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+        }
+
+        .topbar-logo {
+            font-family: var(--display);
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: -0.3px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .topbar-logo .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .topbar-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .topbar-meta span { display: flex; align-items: center; gap: 6px; }
+
+        .status-dot {
+            width: 5px; height: 5px; border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* ─── Panels ─── */
+        .panel {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .panel-left {
+            border-right: 1px solid var(--border);
+            background: var(--surface);
+        }
+
+        .panel-right {
+            background: var(--bg);
+        }
+
+        /* ─── Problem header ─── */
+        .problem-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .problem-title {
+            font-family: var(--display);
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .badge {
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid;
+            flex-shrink: 0;
+            margin-left: 16px;
+            margin-top: 4px;
+        }
+
+        .badge-medium { color: #fbbf24; border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.06); }
+        .badge-easy   { color: var(--accent); border-color: rgba(163,230,53,0.3); background: rgba(163,230,53,0.06); }
+        .badge-hard   { color: var(--error);  border-color: rgba(248,113,113,0.3); background: rgba(248,113,113,0.06); }
+
+        .problem-meta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .problem-meta-label {
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        .problem-meta-value {
+            font-size: 11px;
+            color: var(--text-muted);
+            background: var(--surface-2);
+            padding: 2px 8px;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+        }
+
+        .problem-desc {
+            font-family: var(--mono);
+            font-size: 13px;
+            line-height: 1.8;
+            color: #a1a1aa;
+            margin-bottom: 32px;
+        }
+
+        /* ─── Test cases ─── */
+        .section-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .test-case {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 6px 12px;
+            font-size: 12px;
+            transition: border-color 0.2s;
+        }
+
+        .test-case:hover { border-color: var(--border-accent); }
+
+        .tc-label {
+            color: var(--text-dim);
+            font-size: 10px;
+            letter-spacing: 0.5px;
+            padding-top: 2px;
+            white-space: nowrap;
+        }
+
+        .tc-value {
+            color: var(--text);
+            font-family: var(--mono);
+        }
+
+        .tc-value code {
+            background: var(--surface-3);
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        /* ─── Right panel: Editor ─── */
+        .editor-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .lang-select-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .lang-select-wrapper::before {
+            content: '⟨⟩';
+            position: absolute;
+            left: 12px;
+            font-size: 11px;
+            color: var(--text-muted);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        select#lenguaje {
+            appearance: none;
+            background: var(--surface-2);
+            color: var(--text);
+            border: 1px solid var(--border-accent);
+            padding: 8px 32px 8px 34px;
+            border-radius: 6px;
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        select#lenguaje:focus,
+        select#lenguaje:hover {
+            border-color: rgba(163,230,53,0.4);
+            background: var(--surface-3);
+        }
+
+        .editor-lines {
+            position: relative;
+            flex: 1;
+            display: flex;
+            min-height: 0;
+        }
+
+        .line-numbers {
+            padding: 14px 12px 14px 0;
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--text-dim);
+            text-align: right;
+            user-select: none;
+            min-width: 36px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            overflow: hidden;
+        }
+
+        textarea#codigo {
+            flex: 1;
+            background: var(--surface-2);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 16px;
+            font-family: var(--mono);
+            font-size: 13px;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            transition: border-color 0.2s;
+            min-height: 0;
+        }
+
+        textarea#codigo:focus {
+            border-color: rgba(163,230,53,0.3);
+        }
+
+        textarea#codigo::placeholder {
+            color: var(--text-dim);
+        }
+
+        /* ─── Run button ─── */
+        .btn-run {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 13px 24px;
+            margin-top: 12px;
+            background: var(--accent);
+            color: #0a0a0a;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--display);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-run::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.5s;
+        }
+
+        .btn-run:hover::before { transform: translateX(100%); }
+
+        .btn-run:hover {
+            background: #b9ff3a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(163,230,53,0.25);
+        }
+
+        .btn-run:active { transform: translateY(0); }
+        .btn-run.loading { opacity: 0.7; cursor: wait; }
+
+        .btn-icon {
+            width: 16px; height: 16px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ─── Console ─── */
+        .console-wrapper {
+            margin-top: 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .console-topbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .console-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+        }
+
+        .console-topbar-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            margin-left: 4px;
+        }
+
+        #console-output {
+            background: var(--bg);
+            padding: 14px 16px;
+            min-height: 100px;
+            max-height: 240px;
+            overflow-y: auto;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        #console-output::-webkit-scrollbar { width: 4px; }
+        #console-output::-webkit-scrollbar-track { background: transparent; }
+        #console-output::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 2px; }
+
+        .console-idle {
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .console-idle::before {
+            content: '>';
+            color: var(--accent);
+        }
+
+        .console-banner {
+            color: var(--text-muted);
+            font-size: 11px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .test-result {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 12px;
+            border: 1px solid;
+        }
+
+        .test-result.pass {
+            background: var(--accent-dim);
+            border-color: rgba(163,230,53,0.2);
+        }
+
+        .test-result.fail {
+            background: var(--error-dim);
+            border-color: rgba(248,113,113,0.2);
+        }
+
+        .test-result-icon {
+            font-size: 13px;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .pass .test-result-icon { color: var(--accent); }
+        .fail .test-result-icon { color: var(--error); }
+
+        .test-result-body { flex: 1; }
+
+        .test-result-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .pass .test-result-title { color: var(--accent); }
+        .fail .test-result-title { color: var(--error); }
+
+        .test-result-detail {
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+
+        .test-result-detail span { color: var(--text); }
+
+        /* ─── Scrollbars ─── */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 2px; }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 900px) {
+            body { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; }
+            .panel-left { border-right: none; border-bottom: 1px solid var(--border); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <header class="topbar">
+        <div class="topbar-logo">
+            <span class="dot"></span>
+            TestCodex
+        </div>
+        <div class="topbar-meta">
+            <span><span class="status-dot"></span> Sandbox activo</span>
+            <span style="color: var(--text-dim)">|</span>
+            <span>Entorno seguro</span>
+        </div>
+    </header>
+
+    <!-- Left Panel: Problem -->
+    <div class="panel panel-left">
+        <div class="problem-header">
+            <h1 class="problem-title">{{ problem.titulo }}</h1>
+            <span class="badge badge-medium">{{ problem.dificultad }}</span>
+        </div>
+
+        <div class="problem-meta">
+            <span class="problem-meta-label">Categoría</span>
+            <span class="problem-meta-value">{{ problem.categoria }}</span>
+        </div>
+
+        <p class="problem-desc">{{ problem.descripcion }}</p>
+
+        <div class="section-label">Casos de prueba públicos</div>
+
+        {% for test in problem.tests %}
+        <div class="test-case">
+            <span class="tc-label">entrada</span>
+            <span class="tc-value"><code>{{ test.input }}</code></span>
+            <span class="tc-label">esperado</span>
+            <span class="tc-value"><code>{{ test.expected }}</code></span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Right Panel: Editor -->
+    <div class="panel panel-right" style="gap: 0;">
+        <div class="editor-header">
+            <div class="section-label" style="margin: 0; flex: 1; margin-right: 16px;">Editor de código</div>
+            <div class="lang-select-wrapper">
+                <select id="lenguaje">
+                    <option value="python">Python 3</option>
+                    <option value="java">Java 17</option>
+                    <option value="go">Go 1.21</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="editor-lines" style="margin-top: 12px; flex: 1;">
+            <div class="line-numbers" id="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10</div>
+            <textarea id="codigo" placeholder="# Ingresa tu solución aquí..." spellcheck="false"></textarea>
+        </div>
+
+        <button class="btn-run" onclick="ejecutarPrueba()">
+            <span class="btn-icon">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <polygon points="3,1 13,7 3,13" fill="currentColor"/>
+                </svg>
+            </span>
+            Ejecutar código
+        </button>
+
+        <div class="console-wrapper">
+            <div class="console-topbar">
+                <div class="console-dot" style="background:#ff5f57;"></div>
+                <div class="console-dot" style="background:#febc2e;"></div>
+                <div class="console-dot" style="background:#28c840;"></div>
+                <span class="console-topbar-label">consola de ejecución</span>
+            </div>
+            <div id="console-output">
+                <span class="console-idle">Esperando instrucciones...</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Line numbers sync
+        const textarea = document.getElementById('codigo');
+        const lineNumbers = document.getElementById('line-numbers');
+
+        function updateLineNumbers() {
+            const lines = textarea.value.split('\n').length;
+            const current = lineNumbers.querySelectorAll('br').length + 1;
+            if (lines !== current) {
+                lineNumbers.innerHTML = Array.from({length: lines}, (_, i) => i + 1).join('<br>');
+            }
+        }
+
+        textarea.addEventListener('input', updateLineNumbers);
+        textarea.addEventListener('scroll', () => {
+            lineNumbers.scrollTop = textarea.scrollTop;
+        });
+
+        // Run test
+        async function ejecutarPrueba() {
+            const boton = document.querySelector('.btn-run');
+            const consola = document.getElementById('console-output');
+
+            boton.classList.add('loading');
+            boton.innerHTML = `
+                <span class="btn-icon">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="animation: spin 1s linear infinite;">
+                        <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="2" stroke-dasharray="20" stroke-dashoffset="5"/>
+                    </svg>
+                </span>
+                Evaluando...
+            `;
+
+            consola.innerHTML = `<span style="color:var(--text-dim);">// Procesando en entorno seguro...</span>`;
+
+            const payload = {
+                lenguaje: document.getElementById('lenguaje').value,
+                codigo: textarea.value
+            };
+
+            try {
+                const respuesta = await fetch('/ejecutar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const datos = await respuesta.json();
+
+                consola.innerHTML = `
+                    <div class="console-banner">
+                        Sandbox iniciado &nbsp;·&nbsp; Lenguaje: <strong>${datos.lenguaje.toUpperCase()}</strong>
+                    </div>
+                `;
+
+                datos.resultados.forEach(test => {
+                    const isPass = test.estado === "Aprobado";
+                    consola.innerHTML += `
+                        <div class="test-result ${isPass ? 'pass' : 'fail'}">
+                            <span class="test-result-icon">${isPass ? '✓' : '✗'}</span>
+                            <div class="test-result-body">
+                                <div class="test-result-title">Test ${test.test_id} — ${test.estado}</div>
+                                <div class="test-result-detail">
+                                    Entrada: <span>${test.input}</span> &nbsp;·&nbsp; Salida: <span>${test.salida}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (err) {
+                consola.innerHTML = `<span style="color:var(--error);">// Error al conectar con el servidor de ejecución.</span>`;
+            }
+
+            boton.classList.remove('loading');
+            boton.innerHTML = `
+                <span class="btn-icon">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <polygon points="3,1 13,7 3,13" fill="currentColor"/>
+                    </svg>
+                </span>
+                Ejecutar código
+            `;
+        }
+
+        // Spin animation
+        const style = document.createElement('style');
+        style.textContent = `@keyframes spin { to { transform: rotate(360deg); } }`;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
