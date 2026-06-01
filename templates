@@ -1,150 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TestCodex - Sandbox</title>
     <style>
         :root {
-            --bg-color: #050505;
-            --panel-bg: #0d0d0d;
-            --text-main: #00ff00;
-            --text-muted: #228b22;
-            --border-color: #004400;
-            --highlight: #00ff00;
-            --error: #ff3333;
+            --bg-color: #0d1117;
+            --panel-color: #161b22;
+            --accent-color: #58a6ff;
+            --text-color: #c9d1d9;
+            --success: #238636;
+            --fail: #da3633;
         }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Consolas', 'Courier New', monospace;
-            margin: 0;
-            padding: 30px;
-            display: flex;
-            gap: 30px;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-
-        .panel {
-            background-color: var(--panel-bg);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            flex: 1;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-        }
-
-        h2 { margin-top: 0; color: #ffffff; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; letter-spacing: 1px; }
-        h3 { color: var(--text-muted); font-size: 1.1em; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; }
         
-        .badge {
-            background-color: transparent; border: 1px solid #d29922; color: #d29922;
-            padding: 4px 10px; border-radius: 20px; font-size: 12px; float: right; letter-spacing: 1px;
-        }
+        .panel { background: var(--panel-color); padding: 20px; border-radius: 8px; border: 1px solid #30363d; }
+        
+        pre { background: #000; padding: 15px; border-radius: 5px; overflow-x: auto; color: #79c0ff; }
+        
+        .test-pass { color: var(--success); font-weight: bold; }
+        .test-fail { color: var(--fail); font-weight: bold; }
 
-        .test-case {
-            background-color: #000000; padding: 15px; margin-top: 15px; 
-            border-left: 4px solid var(--border-color); border-radius: 0 8px 8px 0;
-        }
-
-        select, button, textarea {
-            background-color: #000000; color: var(--text-main);
-            border: 1px solid var(--border-color); padding: 12px;
-            border-radius: 8px; font-family: inherit; font-size: 14px;
-            outline: none; transition: all 0.3s ease;
-        }
-
-        select { margin-bottom: 15px; cursor: pointer; }
-        select:focus, textarea:focus { border-color: var(--highlight); box-shadow: 0 0 10px rgba(0, 255, 0, 0.2); }
-
-        textarea { flex-grow: 1; min-height: 250px; resize: none; margin-bottom: 15px; line-height: 1.5; }
-
-        button {
-            background-color: var(--border-color); color: #000; font-weight: bold;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
-        }
-        button:hover { background-color: var(--highlight); box-shadow: 0 0 15px rgba(0, 255, 0, 0.4); }
-
-        #console-output {
-            background-color: #000; padding: 15px; border-radius: 8px;
-            border: 1px solid var(--border-color); min-height: 100px;
-            margin-top: 15px; overflow-y: auto; font-size: 13px;
-        }
-
-        .pass { border-left-color: var(--highlight); }
-        .fail { border-left-color: var(--error); color: var(--error); }
+        h2 { color: var(--accent-color); border-bottom: 1px solid #30363d; padding-bottom: 10px; }
     </style>
 </head>
 <body>
 
     <div class="panel">
-        <h2>{{ problem.titulo }} <span class="badge">{{ problem.dificultad }}</span></h2>
-        <p><strong>Categoría:</strong> {{ problem.categoria }}</p>
-        <p style="line-height: 1.6; color: #cccccc;">{{ problem.descripcion }}</p>
-        
-        <h3>Datos de Prueba Públicos</h3>
-        {% for test in problem.tests %}
-        <div class="test-case">
-            <span style="color:#888;">>_ Entrada:</span> <code>{{ test.input }}</code><br>
-            <span style="color:#888;">>_ Esperado:</span> <code>{{ test.expected }}</code>
-        </div>
-        {% endfor %}
+        <h2>Código (Solution.py)</h2>
+        <pre><code>
+def twoSum(nums, target):
+    mapa = {}
+    for i, n in enumerate(nums):
+        diff = target - n
+        if diff in mapa: return [mapa[diff], i]
+        mapa[n] = i
+        </code></pre>
     </div>
 
     <div class="panel">
-        <select id="lenguaje">
-            <option value="python">Python 3</option>
-            <option value="java">Java 17</option>
-            <option value="go">Go 1.21</option>
-        </select>
-        
-        <textarea id="codigo" placeholder="// Ingresa tu código aquí..."></textarea>
-        <button onclick="ejecutarPrueba()">Ejecutar Código</button>
-
-        <div id="console-output">
-            <span style="color:#888;">Consola de ejecución... Esperando instrucciones.</span>
-        </div>
+        <h2>Resultados del Test</h2>
+        <table>
+            <tr><th>Caso</th><th>Resultado</th><th>Estado</th></tr>
+            <tr><td>[2,7,11,15], 9</td><td>[0, 1]</td><td class="test-pass">✓ PASSED</td></tr>
+        </table>
     </div>
 
-    <script>
-        async function ejecutarPrueba() {
-            const boton = document.querySelector('button');
-            const consola = document.getElementById('console-output');
-            
-            boton.innerText = "Evaluando...";
-            consola.innerHTML = "<span style='color:#888;'>Procesando en entorno seguro...</span>";
+    <div class="panel" style="grid-column: span 2;">
+        <h2>Explicación del Algoritmo</h2>
+        <p>Utilizamos un <strong>Hash Map</strong> para reducir la complejidad de tiempo de O(n²) a O(n). Almacenamos el índice de cada número recorrido para consultar el complemento en tiempo constante.</p>
+    </div>
 
-            const payload = {
-                lenguaje: document.getElementById('lenguaje').value,
-                codigo: document.getElementById('codigo').value
-            };
-
-            const respuesta = await fetch('/ejecutar', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            const datos = await respuesta.json();
-            
-            consola.innerHTML = `<span style="color:#fff;">[!] Sandbox iniciado. Lenguaje: ${datos.lenguaje.toUpperCase()}</span><br><br>`;
-            datos.resultados.forEach(test => {
-                const claseEstado = test.estado === "Aprobado" ? "pass" : "fail";
-                const colorTexto = test.estado === "Aprobado" ? "var(--highlight)" : "var(--error)";
-                consola.innerHTML += `
-                    <div class="test-case ${claseEstado}" style="margin-top: 10px; padding: 10px;">
-                        <strong style="color:${colorTexto}">Test ${test.test_id}: [${test.estado}]</strong><br>
-                        Entrada: ${test.input} <br>
-                        Salida obtenida: ${test.salida}
-                    </div>
-                `;
-            });
-            boton.innerText = "Ejecutar Código";
-        }
-    </script>
 </body>
 </html>
