@@ -1,10 +1,8 @@
 import sqlite3
 
-# 1. Conectar a la base de datos (se creará automáticamente el archivo)
 conexion = sqlite3.connect('database.db')
 cursor = conexion.cursor()
 
-# 2. Crear tabla de Problemas
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS problemas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -15,7 +13,6 @@ cursor.execute('''
     )
 ''')
 
-# 3. Crear tabla de Casos de Prueba (relacionada al problema)
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS casos_prueba (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,17 +23,21 @@ cursor.execute('''
     )
 ''')
 
-# 4. Insertar nuestro primer problema real
 cursor.execute('''
     INSERT INTO problemas (titulo, dificultad, categoria, descripcion)
-    VALUES ('71. Simplify Path', 'Medium', 'Stack', 'Dada una ruta absoluta para un sistema de archivos, conviértela a la ruta canónica simplificada. Ignora los puntos simples ''.'' y maneja los dobles ''..'' subiendo un nivel de directorio.')
+    VALUES (
+        '71. Simplify Path',
+        'Medium',
+        'Stack',
+        'Dada una ruta absoluta para un sistema de archivos, conviértela a la ruta canónica simplificada. Ignora los puntos simples . y maneja los dobles .. subiendo un nivel de directorio.'
+    )
 ''')
-problema_id = cursor.lastrowid # Obtenemos el ID que se le asignó
 
-# 5. Insertar los casos de prueba para ese problema
+problema_id = cursor.lastrowid
+
 casos = [
-    ('"/home/"', '"/home"'),
-    ('"/../"', '"/"'),
+    ('"/home/"',    '"/home"'),
+    ('"/../"',      '"/"'),
     ('"/home//foo/"', '"/home/foo"')
 ]
 
@@ -45,8 +46,6 @@ cursor.executemany('''
     VALUES (?, ?, ?)
 ''', [(problema_id, c[0], c[1]) for c in casos])
 
-# Guardar cambios y cerrar
 conexion.commit()
 conexion.close()
-
-print("¡Éxito! Base de datos 'database.db' inicializada correctamente.")
+print("Base de datos inicializada correctamente.")
