@@ -1,54 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <style>
-        :root {
-            --bg-color: #0d1117;
-            --panel-color: #161b22;
-            --accent-color: #58a6ff;
-            --text-color: #c9d1d9;
-            --success: #238636;
-            --fail: #da3633;
-        }
-
-        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; }
-        
-        .panel { background: var(--panel-color); padding: 20px; border-radius: 8px; border: 1px solid #30363d; }
-        
-        pre { background: #000; padding: 15px; border-radius: 5px; overflow-x: auto; color: #79c0ff; }
-        
-        .test-pass { color: var(--success); font-weight: bold; }
-        .test-fail { color: var(--fail); font-weight: bold; }
-
-        h2 { color: var(--accent-color); border-bottom: 1px solid #30363d; padding-bottom: 10px; }
-    </style>
-</head>
-<body>
-
-    <div class="panel">
-        <h2>Código (Solution.py)</h2>
-        <pre><code>
-def twoSum(nums, target):
-    mapa = {}
-    for i, n in enumerate(nums):
-        diff = target - n
-        if diff in mapa: return [mapa[diff], i]
-        mapa[n] = i
-        </code></pre>
+<header style="display: flex; justify-content: center; align-items: center; padding: 20px; border-bottom: 1px solid #333; margin-bottom: 30px;">
+    <div style="text-align: center;">
+        <div style="width: 50px; height: 50px; background: #fff; border-radius: 50%; margin: 0 auto;"></div> <nav style="margin-top: 15px;">
+            <a href="#" style="color: #fff; text-decoration: none; margin: 0 15px;">Inicio</a>
+            <a href="#" style="color: #fff; text-decoration: none; margin: 0 15px;">Catálogo</a>
+            <a href="#" style="color: #fff; text-decoration: none; margin: 0 15px;">Contacto</a>
+        </nav>
     </div>
-
-    <div class="panel">
-        <h2>Resultados del Test</h2>
-        <table>
-            <tr><th>Caso</th><th>Resultado</th><th>Estado</th></tr>
-            <tr><td>[2,7,11,15], 9</td><td>[0, 1]</td><td class="test-pass">✓ PASSED</td></tr>
-        </table>
-    </div>
-
-    <div class="panel" style="grid-column: span 2;">
-        <h2>Explicación del Algoritmo</h2>
-        <p>Utilizamos un <strong>Hash Map</strong> para reducir la complejidad de tiempo de O(n²) a O(n). Almacenamos el índice de cada número recorrido para consultar el complemento en tiempo constante.</p>
-    </div>
-
-</body>
-</html>
+</header>
